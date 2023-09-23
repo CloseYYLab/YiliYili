@@ -84,3 +84,6 @@ convert_to_img(False)#转换测试集
 ```
 运行完毕后，会在指定的文件夹目录下生成一个MNIST文件夹，其子文件夹/raw中包含/test和/train两个图片文件夹，以及rawtest.txt和rawtrain.txt两个标签文件  
 至此，数据准备工作就告一段落
+
+## 创建dataset
+dataset 的作用是对整个数据集进行整理，排序。如果说原始数据集是分散在各个同学手里的作业，那么 dataset 就是收作业的课代表。课代表按照学号来把所有的作业本收集起来，然后提供给老师。这也就是 dataset 的作用
