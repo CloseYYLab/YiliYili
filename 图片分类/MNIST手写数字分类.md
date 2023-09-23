@@ -66,7 +66,7 @@ def convert_to_img(train=True):
         for i, (img,label) in enumerate(zip(train_set[0],train_set[1])):
             img_path=data_path+str(i)+'.jpg'
             io.imsave(img_path,img.numpy())
-            f.write(img_path+' '+str(label)+'\n')
+            f.write(img_path+' '+str(int(label))+'\n')
         f.close()
     else:
         f = open(root_dir + 'test.txt', 'w')
@@ -76,7 +76,7 @@ def convert_to_img(train=True):
         for i, (img,label) in enumerate(zip(test_set[0],test_set[1])):
             img_path = data_path+ str(i) + '.jpg'
             io.imsave(img_path, img.numpy())
-            f.write(img_path + ' ' + str(label) + '\n')
+            f.write(img_path + ' ' + str(int(label)) + '\n')
         f.close()
 
 convert_to_img(True)#转换训练集
@@ -103,4 +103,37 @@ dataset 的构建需要继承 torch 的 Dataset 类并进行重写
 本文所使用的方法是第二种方法，也就是有训练集标签.txt和测试集标签.txt两个文件  
 在处理第一种方法的数据集时，可以在 `__getitem__` 方法内对图片的路径进行处理来得到标签，也可以生成 txt 文件来获得全部的标签，各位同学按照自己的喜好来选择即可  
 
+`__init__`:加载全部的图片路径，并以字典的形式存储图片路径和对应的标签
+```python
+    def __init__(self,label_dir,image_dir):
+        self.label_dir = label_dir
+        self.image_dir = image_dir
+        # 获取全部的图片并保存在list中
+        self.image_path_list = os.listdir(image_dir)
+        # 构建 image_name 和 label 的键值对
+        self.label_dict = {}
+        with open(self.label_dir,'r') as fr:
+            datas = fr.readlines()
+            for data in datas:
+                tmp = data.split(' ')
+                tmp_image_abs_path = tmp[0]
+                tmp_label = int(tmp[1]) # 这里加 int 是为了去掉结尾换行符 '\n'
+                self.label_dict[tmp_image_abs_path] = tmp_label
+```
 
+`__getitem__`:返回cv格式的图片和int类型的标签
+```python
+    def __getitem__(self, index):
+        image_name = self.image_path_list[index]
+        image_abs_path = os.path.join(self.image_dir,image_name)
+
+        label = self.label_dict[image_abs_path]
+        image = cv2.imread(image_abs_path)
+        return image,label
+```
+
+`__len__`:返回数据集大小
+```python
+    def __len__(self):
+        return len(self.image_path_list)
+```
