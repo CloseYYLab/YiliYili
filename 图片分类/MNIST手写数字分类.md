@@ -137,3 +137,46 @@ dataset 的构建需要继承 torch 的 Dataset 类并进行重写
     def __len__(self):
         return len(self.image_path_list)
 ```
+
+完整代码如下(附上运行代码)
+```python
+import torchvision
+from torch.utils.data import Dataset
+import cv2
+import os
+
+class learn_dataset(Dataset):
+    def __init__(self,label_dir,image_dir):
+        self.label_dir = label_dir
+        self.image_dir = image_dir
+        # 获取全部的图片并保存在list中
+        self.image_path_list = os.listdir(image_dir)
+        # 构建 image_name 和 label 的键值对
+        self.label_dict = {}
+        with open(self.label_dir,'r') as fr:
+            datas = fr.readlines()
+            for data in datas:
+                tmp = data.split(' ')
+                tmp_image_abs_path = tmp[0]
+                tmp_label = int(tmp[1]) # 这里加 int 是为了去掉结尾换行符 '\n'
+                self.label_dict[tmp_image_abs_path] = tmp_label
+            
+    def __getitem__(self, index):
+        image_name = self.image_path_list[index]
+        image_abs_path = os.path.join(self.image_dir,image_name)
+
+        label = self.label_dict[image_abs_path]
+        image = cv2.imread(image_abs_path)
+        return image,label
+
+    def __len__(self):
+        return len(self.image_path_list)
+
+if __name__ == '__main__':
+    train_dataset = learn_dataset(image_dir='./MNIST/raw/train',
+                                  label_dir='./MNIST/rawtrain.txt')
+    test_dataset = learn_dataset(image_dir='./MNIST/raw/test',
+                                  label_dir='./MNIST/rawtest.txt')
+    image,label = train_dataset[0]
+    print(image,label)
+```
