@@ -173,10 +173,16 @@ class learn_dataset(Dataset):
         return len(self.image_path_list)
 
 if __name__ == '__main__':
-    train_dataset = learn_dataset(image_dir='./MNIST/raw/train',
-                                  label_dir='./MNIST/rawtrain.txt')
-    test_dataset = learn_dataset(image_dir='./MNIST/raw/test',
-                                  label_dir='./MNIST/rawtest.txt')
+    train_dataset = learn_dataset(image_dir='/home/jvm/yolov5/learn/MNIST/raw/train',
+                                  label_dir='/home/jvm/yolov5/learn/MNIST/rawtrain.txt')
+    test_dataset = learn_dataset(image_dir='/home/jvm/yolov5/learn/MNIST/raw/test',
+                                  label_dir='/home/jvm/yolov5/learn/MNIST/rawtest.txt')
     image,label = train_dataset[0]
-    print(image,label)
+    
+    print(label)
+    cv2.imshow('Image', image)
+    cv2.waitKey(0)
+    cv2.destroyAllWindows()
+    
 ```
+运行结束后可以得到一个显示图片的窗口，在解释器的终端里会输出对应的标签(这里由于是服务器,不方便显示图片,就不再粘贴图片了)
