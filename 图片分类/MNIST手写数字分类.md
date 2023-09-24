@@ -194,11 +194,28 @@ if __name__ == '__main__':
 ```python
 pip install tqdm
 ```
+
 tqdm 的使用非常简单，可以理解为对 for 循环又包了一层，例子见下
 ```python
-for i in tqdm(range(20), desc='It\'s a test'):
+from tqdm import tqdm
+import time 
+
+for i in tqdm(range(20), desc='tqdm test'):
     time.sleep(0.1)
 ```
+
+其中 tqdm 语句的一个参数就是要运行的目标，通常是一个**可迭代对象**，而 desc 则是进度条前面的描述语句，一般来讲填这两个就可以了
+
+tqdm()主要参数默认值与解释
+- `iterable=None`:可迭代对象。如上一节中的range(20)
+- `desc=None`:传入str类型，作为进度条标题。如上一节中的desc='It\'s a test'
+- `total=None`:预期的迭代次数。一般不填，默认为iterable的长度。
+- `leave=True`:迭代结束时，是否保留最终的进度条。默认保留。
+- `file=None`:输出指向位置，默认是终端，一般不需要设置。
+- `ncols=None`:可以自定义进度条的总长度
+- `unit`:描述处理项目的文字，默认’it’，即100it/s；处理照片设置为’img’，则为100img/s
+- `postfix`:以字典形式传入详细信息，将显示在进度条中。例如postfix={'value': 520}
+- `unit_scale`:自动根据国际标准进行项目处理速度单位的换算，例如100000it/s换算为100kit/s
 
 
 
