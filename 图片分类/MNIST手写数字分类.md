@@ -217,5 +217,30 @@ tqdm()主要参数默认值与解释
 - `postfix`:以字典形式传入详细信息，将显示在进度条中。例如postfix={'value': 520}
 - `unit_scale`:自动根据国际标准进行项目处理速度单位的换算，例如100000it/s换算为100kit/s
 
+## DataLoader
+dataset 是加载全部数据集，但是我们希望以分批的形式把他们送给模型，而不是每次都把全部数据集丢给网络   
+就像老师本人并不亲自收作业，而是让几个课代表去收，收完了再送给老师  
 
+dataset可以看作是学生提交的各个作业。而dataloader则相当于老师让课代表去收取作业，那么网络训练的整体过程可以理解为将所有作业按照一定的规则（例如按照学生姓名或学号排序）分成若干个小组，每次从一个小组中取出一定数量的作业进行批量处理和评分，然后再从下一个小组中取出一批作业，重复这个过程直到所有作业都被处理完毕。
 
+dataloader 的主要参数有以下几个`dataset`,`batch_size`,`shuffle`,`num_workers`,`drop_last`
+
+- `dataset`:指向的数据集
+- `batch_size`:一个批次的大小，也就是加载几个数据
+- `shuffle`:是否以乱序从数据集中加载数据
+- `num_workers`:用来加载数据的线程数
+- `drop_last`:如果剩下的数据不满足一个批次，是否丢掉
+
+更多参数说明请参考 https://pytorch.org/docs/stable/data.html  
+
+好的，那么现在为我们的训练集和测试集都创建一个 dataloader  
+```python
+    from torch.utils.data import DataLoader
+    # 创建 dataloader
+    train_dataloader = DataLoader(dataset = train_dataset,batch_size = 10,shuffle=True,num_workers=2,drop_last=False)
+    test_dataloader = DataLoader(dataset = test_dataset,batch_size = 10,shuffle=True,num_workers=2,drop_last=False)
+    
+    # 遍历 dataloader
+    for image,label in train_dataloader:
+        print(image,label)
+```
