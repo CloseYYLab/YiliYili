@@ -244,3 +244,11 @@ test_dataloader = DataLoader(dataset = test_dataset,batch_size = 10,shuffle=True
 for image,label in train_dataloader:
     print(image,label)
 ```
+
+## 模型搭建
+这部分会先介绍一些通用知识，然后搭建一个 resnet50   
+首先，模型搭建需要初始化一个类，并继承`nn.Module`  
+该类主要完成的方法共两个 `__init__` 和 `forward`
+
+- `__init__`:负责定义网络内的各种层
+- `forward`:负责执行网络的前向传播过程,也就是使用各种层
