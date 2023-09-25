@@ -235,12 +235,12 @@ dataloader 的主要参数有以下几个`dataset`,`batch_size`,`shuffle`,`num_w
 
 好的，那么现在为我们的训练集和测试集都创建一个 dataloader  
 ```python
-    from torch.utils.data import DataLoader
-    # 创建 dataloader
-    train_dataloader = DataLoader(dataset = train_dataset,batch_size = 10,shuffle=True,num_workers=2,drop_last=False)
-    test_dataloader = DataLoader(dataset = test_dataset,batch_size = 10,shuffle=True,num_workers=2,drop_last=False)
+from torch.utils.data import DataLoader
+# 创建 dataloader
+train_dataloader = DataLoader(dataset = train_dataset,batch_size = 10,shuffle=True,num_workers=2,drop_last=False)
+test_dataloader = DataLoader(dataset = test_dataset,batch_size = 10,shuffle=True,num_workers=2,drop_last=False)
     
-    # 遍历 dataloader
-    for image,label in train_dataloader:
-        print(image,label)
+# 遍历 dataloader
+for image,label in train_dataloader:
+    print(image,label)
 ```
