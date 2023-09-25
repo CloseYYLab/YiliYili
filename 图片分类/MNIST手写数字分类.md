@@ -252,3 +252,16 @@ for image,label in train_dataloader:
 
 - `__init__`:负责定义网络内的各种层
 - `forward`:负责执行网络的前向传播过程,也就是使用各种层
+
+我们先在`__init__`中定义一个简单的卷积层，然后在 `forward` 中执行它
+```python
+from torch import nn
+class learn_net(nn.Module):
+    def __init__(self):
+        super(learn_net, self).__init__()
+        self.conv1 = nn.Conv2d(in_channels=3,out_channels=6,kernel_size=3,stride=1,padding=0)
+
+    def forward(self,x):
+        out = self.conv1(x)
+        return out
+```
