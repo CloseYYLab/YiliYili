@@ -1,10 +1,10 @@
-## 网络名称（此处应替换为具体的网络名称）
+## ResNet
 
 ### 相关链接
-参考博文链接：  
-参考视频链接：  
-源码链接：  
-论文链接：  
+参考博文链接：  https://blog.csdn.net/darkeyers/article/details/90475475
+参考视频链接：  https://www.bilibili.com/video/BV1T7411T7wa/?spm_id_from=333.337.search-card.all.click&vd_source=594ee72d6db12e2d44e84d3a8b13ae0b 
+源码链接：  https://blog.csdn.net/darkeyers/article/details/90475475
+论文链接：  https://arxiv.org/abs/1512.03385
 
 ### 网络对应的数据集以及对比实验分析
 该部分图片请从对应的论文中截取,并给出对比实验的分析和结论
